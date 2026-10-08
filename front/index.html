@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRESH HARVEST</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-leaf"></i>
+                <span>FRESH HARVEST</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About Us</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+            </div>
+            
+            <div class="nav-auth">
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <div class="user-icon" id="userIcon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <span id="userName">User Name</span>
+                            <span id="userEmail">user@email.com</span>
+                        </div>
+                       
+                    </div>
+                </div>
+                <button class="login-btn" id="loginBtn">
+                    <i class="fab fa-google"></i>
+                    Sign in with Google
+                </button>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+    <script> // Existing login/profile code ...
+
+// When profile icon is clicked → go to profile page
+const userIcon = document.getElementById("userIcon");
+if (userIcon) {
+  userIcon.addEventListener("click", () => {
+    window.location.href = "profile.html";
+  });
+}
+</script>   <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="slider-container">
+                <div class="slide active">
+                    <img src="https://images.pexels.com/photos/1300975/pexels-photo-1300975.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" alt="Fresh Vegetables">
+                    <div class="slide-content">
+                        <h1>Fresh Organic Vegetables</h1>
+                        <p>Straight from local farms to your table</p>
+                        <button class="cta-btn" onclick="goToShop()">Shop Now</button>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" alt="Premium Produce">
+                    <div class="slide-content">
+                        <h1>Premium Quality Produce</h1>
+                        <p>Hand-picked for freshness and flavor</p>
+                        <button class="cta-btn" onclick="goToShop()">Shop Now</button>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" alt="Daily Fresh Delivery">
+                    <div class="slide-content">
+                        <h1>Daily Fresh Delivery</h1>
+                        <p>Get the best vegetables delivered to your doorstep</p>
+                        <button class="cta-btn" onclick="goToShop()">Shop Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="slider-btn prev" onclick="changeSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-btn next" onclick="changeSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="slider-dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>About FreshHarvest</h2>
+                        <p class="about-description">
+                            At FreshHarvest, we're passionate about bringing you the freshest, highest-quality vegetables 
+                            straight from local farms. With over 15 years of experience in the fresh produce industry, 
+                            we've built strong relationships with trusted farmers who share our commitment to sustainable 
+                            farming practices and exceptional quality.
+                        </p>
+                        <p class="about-description">
+                            Our vegetables are harvested daily at peak ripeness and delivered to your doorstep within 
+                            hours, ensuring maximum freshness and nutritional value. We believe that fresh, healthy 
+                            food should be accessible to everyone, which is why we offer competitive prices without 
+                            compromising on quality.
+                        </p>
+                      <div class="about-stats">
+    <div class="stat">
+        <h3 data-target="15">0</h3>
+        <p>Years Experience</p>
+    </div>
+    <div class="stat">
+        <h3 data-target="50">0</h3>
+        <p>Local Farms</p>
+    </div>
+    <div class="stat">
+        <h3 data-target="10000">0</h3>
+        <p>Happy Customers</p>
+    </div>
+</div>
+
+<script>
+    const counters = document.querySelectorAll('.stat h3');
+    const duration = 2000; // total animation time in ms (2s)
+    const frameRate = 20;  // update every 20ms
+    const steps = duration / frameRate; // total steps
+
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const increment = target / steps;
+        let count = 0;
+
+        const updateCount = () => {
+            count += increment;
+            if (count < target) {
+                counter.innerText = Math.floor(count);
+                setTimeout(updateCount, frameRate);
+            } else {
+                // Final value formatting
+                if (target >= 1000) {
+                    counter.innerText = (target / 1000) + "k+";
+                } else {
+                    counter.innerText = target + "+";
+                }
+            }
+        };
+        updateCount();
+    });
+</script>
+
+<style>
+.about-stats {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin: 30px 0;
+}
+.stat h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d6a4f;
+}
+.stat p {
+    margin-top: 5px;
+    font-size: 1rem;
+    color: #555;
+}
+</style>
+
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Fresh vegetables display">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Services</h2>
+                    <p>We're committed to bringing you the freshest vegetables with exceptional service</p>
+                </div>
+
+                <div class="service-tabs">
+                    <button class="tab-btn active" onclick="showService('delivery')">
+                        <i class="fas fa-truck"></i>
+                        Home Delivery
+                    </button>
+                    <button class="tab-btn" onclick="showService('fresh')">
+                        <i class="fas fa-leaf"></i>
+                        Always Fresh
+                    </button>
+                    <button class="tab-btn" onclick="showService('quality')">
+                        <i class="fas fa-shield-alt"></i>
+                        Quality Assured
+                    </button>
+                    <button class="tab-btn" onclick="showService('timing')">
+                        <i class="fas fa-clock"></i>
+                        Flexible Timing
+                    </button>
+                </div>
+
+                <div class="service-content">
+                    <div class="service-panel active" id="delivery">
+                        <div class="service-info">
+                            <div class="service-text">
+                                <h3>Home Delivery</h3>
+                                <p>Get fresh vegetables delivered to your doorstep within 2 hours of ordering.</p>
+                                <ul class="service-features">
+                                    <li><i class="fas fa-check"></i> Same-day delivery</li>
+                                    <li><i class="fas fa-check"></i> Temperature controlled transport</li>
+                                    <li><i class="fas fa-check"></i> Contactless delivery</li>
+                                    <li><i class="fas fa-check"></i> Real-time tracking</li>
+                                </ul>
+                            </div>
+                            <div class="service-visual">
+                                <i class="fas fa-truck service-icon"></i>
+                                <h4>Experience the Difference</h4>
+                                <p>Join thousands of satisfied customers who trust us for their daily vegetable needs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-panel" id="fresh">
+                        <div class="service-info">
+                            <div class="service-text">
+                                <h3>Always Fresh</h3>
+                                <p>Our vegetables are harvested daily from local farms to ensure maximum freshness.</p>
+                                <ul class="service-features">
+                                    <li><i class="fas fa-check"></i> Daily harvest</li>
+                                    <li><i class="fas fa-check"></i> No preservatives</li>
+                                    <li><i class="fas fa-check"></i> Farm-to-table freshness</li>
+                                    <li><i class="fas fa-check"></i> Quality guaranteed</li>
+                                </ul>
+                            </div>
+                            <div class="service-visual">
+                                <i class="fas fa-leaf service-icon"></i>
+                                <h4>Farm Fresh Quality</h4>
+                                <p>Taste the difference that comes from truly fresh, locally sourced vegetables.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-panel" id="quality">
+                        <div class="service-info">
+                            <div class="service-text">
+                                <h3>Quality Assured</h3>
+                                <p>Every vegetable goes through strict quality checks before reaching your kitchen.</p>
+                                <ul class="service-features">
+                                    <li><i class="fas fa-check"></i> Hand-picked selection</li>
+                                    <li><i class="fas fa-check"></i> Organic certification</li>
+                                    <li><i class="fas fa-check"></i> Pesticide-free options</li>
+                                    <li><i class="fas fa-check"></i> 100% satisfaction guarantee</li>
+                                </ul>
+                            </div>
+                            <div class="service-visual">
+                                <i class="fas fa-shield-alt service-icon"></i>
+                                <h4>Premium Standards</h4>
+                                <p>Our rigorous quality control ensures you get only the best vegetables.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-panel" id="timing">
+                        <div class="service-info">
+                            <div class="service-text">
+                                <h3>Flexible Timing</h3>
+                                <p>Order anytime and choose your preferred delivery slot that fits your schedule.</p>
+                                <ul class="service-features">
+                                    <li><i class="fas fa-check"></i> 24/7 ordering</li>
+                                    <li><i class="fas fa-check"></i> Flexible delivery slots</li>
+                                    <li><i class="fas fa-check"></i> Express delivery</li>
+                                    <li><i class="fas fa-check"></i> Scheduled deliveries</li>
+                                </ul>
+                            </div>
+                            <div class="service-visual">
+                                <i class="fas fa-clock service-icon"></i>
+                                <h4>Your Schedule, Your Way</h4>
+                                <p>We work around your busy lifestyle to deliver when it's convenient for you.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready for Fresh Vegetables?</h2>
+                    <p>Order now and get the freshest vegetables from local farms delivered to your doorstep today!</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <h3>Call Us Now</h3>
+                            <p>+1 (555) 123-4567</p>
+                            <span>Available 24/7 for orders</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>Visit Our Market</h3>
+                            <p>123 Fresh Market St.</p>
+                            <span>Downtown Area</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <h3>Market Hours</h3>
+                            <p>6:00 AM - 9:00 PM</p>
+                            <span>Monday to Sunday</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-buttons">
+                        <button class="cta-btn primary" onclick="goToShop()">Order Online Now</button>
+                        <button class="cta-btn secondary" onclick="goToShop()">View Our Catalog</button>
+                    </div>
+                    
+                    <p class="cta-note">Free delivery on orders over ₹2000 • Same-day delivery available</p>
+                </div>
+            </div>
+        </section>
+        <!-- Scroll to Top Button -->
+<button onclick="scrollToTop()" id="scrollTopBtn">↑</button>
+
+<script>
+// Get the button
+const scrollBtn = document.getElementById("scrollTopBtn");
+
+// Show button after scrolling 200px
+window.onscroll = function() {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    scrollBtn.style.display = "block";
+  } else {
+    scrollBtn.style.display = "none";
+  }
+};
+
+// Scroll to top smoothly
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+</script>
+
+<style>
+#scrollTopBtn {
+  display: none;              /* hidden by default */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 22px;
+  border: none;
+  outline: none;
+  background-color: #2d6a4f;
+  color: white;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s ease;
+}
+
+#scrollTopBtn:hover {
+  background-color: #161c19;
+}
+</style>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

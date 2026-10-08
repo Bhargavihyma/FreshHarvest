@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - FreshHarvest</title>
+    <link rel="stylesheet" href="pstyle.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-leaf"></i>
+                <span>FreshHarvest</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About Us</a>
+                <a href="index.html#services" class="nav-link">Services</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+            </div>
+            
+            <div class="nav-auth">
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <div class="user-icon" id="userIcon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <span id="userName">User Name</span>
+                            <span id="userEmail">user@email.com</span>
+                        </div>
+                        <a href="profile.html" class="profile-link">
+                            <i class="fas fa-user-circle"></i>
+                            My Profile
+                        </a>
+                        <button class="logout-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+                <button class="login-btn" id="loginBtn">
+                    <i class="fab fa-google"></i>
+                    Sign in with Google
+                </button>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-info">
+                    <h1 id="profileName">John Doe</h1>
+                    <p id="profileEmail">john.doe@gmail.com</p>
+                    <span class="profile-badge">Premium Member</span>
+                </div>
+            </div>
+
+            <div class="profile-tabs">
+                <button class="profile-tab active" onclick="showProfileTab('orders')">
+                    <i class="fas fa-shopping-bag"></i>
+                    My Orders
+                </button>
+                <button class="profile-tab" onclick="showProfileTab('wallet')">
+                    <i class="fas fa-wallet"></i>
+                    Wallet
+                </button>
+                <button class="profile-tab" onclick="showProfileTab('cards')">
+                    <i class="fas fa-credit-card"></i>
+                    Payment Cards
+                </button>
+                <button class="profile-tab" onclick="showProfileTab('address')">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Addresses
+                </button>
+            </div>
+
+            <div class="profile-content">
+                <!-- Orders Tab -->
+                <div class="profile-panel active" id="orders">
+                    <div class="panel-header">
+                        <h2>My Orders</h2>
+                        <p>Track your recent orders and order history</p>
+                    </div>
+                    <div class="orders-list" id="ordersList">
+                        <!-- Orders will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Wallet Tab -->
+                <div class="profile-panel" id="wallet">
+                    <div class="panel-header">
+                        <h2>My Wallet</h2>
+                        <p>Manage your wallet balance and transactions</p>
+                    </div>
+                    <div class="wallet-card">
+                        <div class="wallet-balance">
+                            <h3>Current Balance</h3>
+                            <div class="balance-amount">₹<span id="walletBalance">1,250</span></div>
+                        </div>
+                        <div class="wallet-actions">
+                            <button class="btn-primary" onclick="addMoney()">
+                                <i class="fas fa-plus"></i>
+                                Add Money
+                            </button>
+                            <button class="btn-secondary" onclick="viewTransactions()">
+                                <i class="fas fa-history"></i>
+                                Transactions
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transactions-list" id="transactionsList">
+                        <!-- Transactions will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Payment Cards Tab -->
+                <div class="profile-panel" id="cards">
+                    <div class="panel-header">
+                        <h2>Payment Cards</h2>
+                        <p>Manage your saved payment methods</p>
+                    </div>
+                    <div class="cards-grid" id="cardsGrid">
+                        <!-- Cards will be loaded here -->
+                    </div>
+                    <button class="add-card-btn" onclick="addNewCard()">
+                        <i class="fas fa-plus"></i>
+                        Add New Card
+                    </button>
+                </div>
+
+                <!-- Address Tab -->
+                <div class="profile-panel" id="address">
+                    <div class="panel-header">
+                        <h2>Delivery Addresses</h2>
+                        <p>Manage your delivery locations and calculate distances</p>
+                    </div>
+                    <div class="addresses-grid" id="addressesGrid">
+                        <!-- Addresses will be loaded here -->
+                    </div>
+                    <button class="add-address-btn" onclick="addNewAddress()">
+                        <i class="fas fa-plus"></i>
+                        Add New Address
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="profile.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - FreshHarvest</title>
+    <link rel="stylesheet" href="style1.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-leaf"></i>
+                <span>FreshHarvest</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About Us</a>
+                <a href="index.html#services" class="nav-link">Services</a>
+                <a href="shop.html" class="nav-link active">Shop</a>
+            </div>
+            
+            <div class="nav-auth">
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <div class="user-icon" id="userIcon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <span id="userName">User Name</span>
+                            <span id="userEmail">user@email.com</span>
+                        </div>
+                        <button class="logout-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+                <button class="login-btn" id="loginBtn">
+                    <i class="fab fa-google"></i>
+                    Sign in with Google
+                </button>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Shop Section -->
+    <section class="shop-section">
+        <div class="container">
+            <div class="shop-header">
+                <h1>Fresh Vegetables</h1>
+                <p>Choose from our wide selection of farm-fresh vegetables</p>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label>Category:</label>
+                    <select id="categoryFilter" onchange="filterProducts()">
+                        <option value="all">All Vegetables</option>
+                        <option value="leafy">Leafy Greens</option>
+                        <option value="root">Root Vegetables</option>
+                        <option value="fruit">Fruit Vegetables</option>
+                        <option value="herbs">Herbs</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort by:</label>
+                    <select id="sortFilter" onchange="sortProducts()">
+                        <option value="name">Name</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here by JavaScript -->
+            </div>
+
+            <div class="cart-summary" id="cartSummary" style="display: none;">
+                <div class="cart-content">
+                    <h3>Shopping Cart</h3>
+                    <div class="cart-items" id="cartItems"></div>
+                    <div class="cart-total">
+                        <strong>Total:₹ <span id="cartTotal">0.00</span></strong>
+                    </div>
+                    <div class="cart-actions">
+                        <button class="btn-secondary" onclick="clearCart()">Clear Cart</button>
+                        <button class="btn-primary" onclick="checkout()">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="shop.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>Invoke-RestMethod `
+  -Uri "http://localhost:5000/api/cart/1/1" `
+  -Method DELETE

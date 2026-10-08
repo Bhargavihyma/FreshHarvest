@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FreshHarvest - Login / Signup</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 400px;
+      height: 500px;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .flipped {
+      transform: rotateY(180deg);
+    }
+
+    .form-box {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 30px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      backface-visibility: hidden;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-box button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-box button:hover {
+      background: #45a049;
+    }
+
+    .form-box button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    .captcha-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    canvas {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .refresh-btn {
+      padding: 5px 10px;
+      font-size: 14px;
+      background: #ccc !important;
+      color: #000 !important;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: auto !important;
+      margin-top: 0 !important;
+    }
+
+    .timer {
+      font-size: 13px;
+      text-align: right;
+      color: #555;
+    }
+
+    .google-btn {
+      background: #4285F4 !important;
+      color: white;
+      padding: 10px;
+      border: none;
+      margin-top: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .google-btn:hover {
+      background: #357ae8 !important;
+    }
+
+    .toggle {
+      text-align: center;
+      margin-top: 10px;
+      cursor: pointer;
+      color: #007bff;
+    }
+
+    .signup-form {
+      transform: rotateY(180deg);
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="card" id="cardBox">
+
+      <!-- ================================= -->
+      <!-- LOGIN FORM -->
+      <!-- ================================= -->
+
+      <div class="form-box login-form">
+
+        <h2>Login</h2>
+
+        <form id="loginForm">
+
+          <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email"
+            required
+          >
+
+          <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+            required
+          >
+
+          <div class="captcha-box">
+
+            <canvas
+              id="captchaCanvas"
+              width="120"
+              height="40">
+            </canvas>
+
+            <button
+              type="button"
+              class="refresh-btn"
+              onclick="generateCaptcha()">
+              ↻
+            </button>
+
+          </div>
+
+          <div
+            class="timer"
+            id="timer">
+            Captcha expires in 60s
+          </div>
+
+          <input
+            type="text"
+            id="captchaInput"
+            placeholder="Enter captcha"
+            required
+          >
+
+          <button
+            type="submit"
+            id="loginButton">
+            Login
+          </button>
+
+        </form>
+
+        <div
+          id="loginMessage"
+          class="message">
+        </div>
+
+        <button class="google-btn">
+          Login with Google
+        </button>
+
+        <div
+          class="toggle"
+          onclick="flipCard()">
+          Don't have an account? Sign up
+        </div>
+
+      </div>
+
+
+      <!-- ================================= -->
+      <!-- SIGNUP FORM -->
+      <!-- ================================= -->
+
+      <div class="form-box signup-form">
+
+        <h2>Sign Up</h2>
+
+        <form id="signupForm">
+
+          <input
+            type="text"
+            id="signupName"
+            placeholder="Full Name"
+            required
+          >
+
+          <input
+            type="email"
+            id="signupEmail"
+            placeholder="Gmail"
+            required
+          >
+
+          <input
+            type="password"
+            id="signupPassword"
+            placeholder="Password"
+            required
+          >
+
+          <input
+            type="text"
+            id="signupAddress"
+            placeholder="Address"
+            required
+          >
+
+          <button
+            type="submit"
+            id="signupButton">
+            Create Account
+          </button>
+
+        </form>
+
+        <div
+          id="signupMessage"
+          class="message">
+        </div>
+
+        <div
+          class="toggle"
+          onclick="flipCard()">
+          Already have an account? Login
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    // ==================================================
+    // CAPTCHA
+    // ==================================================
+
+    let currentCaptcha = "";
+    let countdownInterval;
+    let countdownTime = 60;
+
+
+    function generateCaptcha() {
+
+      const canvas =
+        document.getElementById("captchaCanvas");
+
+      const ctx =
+        canvas.getContext("2d");
+
+      const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$&!";
+
+      let captcha = "";
+
+
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+
+      ctx.fillStyle = "#f0f0f0";
+
+      ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "#000";
+
+
+      for (let i = 0; i < 6; i++) {
+
+        const char =
+          chars.charAt(
+            Math.floor(
+              Math.random() * chars.length
+            )
+          );
+
+        captcha += char;
+
+        ctx.fillText(
+          char,
+          15 * i + 5,
+          30
+        );
+      }
+
+
+      currentCaptcha = captcha;
+
+      resetTimer();
+    }
+
+
+    function resetTimer() {
+
+      clearInterval(countdownInterval);
+
+      countdownTime = 60;
+
+      updateTimerText();
+
+
+      countdownInterval = setInterval(() => {
+
+        countdownTime--;
+
+        updateTimerText();
+
+
+        if (countdownTime <= 0) {
+
+          clearInterval(countdownInterval);
+
+          generateCaptcha();
+        }
+
+      }, 1000);
+    }
+
+
+    function updateTimerText() {
+
+      document.getElementById("timer").innerText =
+        `Captcha expires in ${countdownTime}s`;
+    }
+
+
+    // ==================================================
+    // LOGIN
+    // ==================================================
+
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", async function(e) {
+
+        e.preventDefault();
+
+
+        const email =
+          document
+            .getElementById("loginEmail")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("loginPassword")
+            .value;
+
+        const captchaInput =
+          document
+            .getElementById("captchaInput")
+            .value
+            .trim();
+
+        const message =
+          document.getElementById("loginMessage");
+
+        const button =
+          document.getElementById("loginButton");
+
+
+        // Clear previous message
+        message.innerText = "";
+        message.className = "message";
+
+
+        // Check CAPTCHA
+        if (captchaInput !== currentCaptcha) {
+
+          message.innerText =
+            "Captcha does not match.";
+
+          message.classList.add("error");
+
+          generateCaptcha();
+
+          return;
+        }
+
+
+        // Disable login button
+        button.disabled = true;
+
+        button.innerText =
+          "Logging in...";
+
+
+        try {
+
+          // Send login request to backend
+          const response = await fetch(
+            "http://localhost:5000/api/auth/login",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json"
+              },
+
+              body: JSON.stringify({
+                email: email,
+                password: password
+              })
+            }
+          );
+
+
+          const data = await response.json();
+
+
+          // Login failed
+          if (!response.ok) {
+
+            message.innerText =
+              data.message ||
+              "Login failed.";
+
+            message.classList.add("error");
+
+            return;
+          }
+
+
+          // Login successful
+          message.innerText =
+            "Login successful!";
+
+          message.classList.add("success");
+
+
+          // Save logged-in user
+          localStorage.setItem(
+            "userName",
+            data.user.full_name
+          );
+
+          localStorage.setItem(
+            "userEmail",
+            data.user.email
+          );
+
+
+          const currentUser = {
+
+            user_id: data.user.user_id,
+
+            name: data.user.full_name,
+
+            email: data.user.email
+
+          };
+
+
+          localStorage.setItem(
+            "currentUser",
+            JSON.stringify(currentUser)
+          );
+
+
+          // Redirect to homepage
+          setTimeout(() => {
+
+            window.location.href =
+              "index.html";
+
+          }, 700);
+
+
+        } catch (error) {
+
+          console.error(
+            "LOGIN ERROR:",
+            error
+          );
+
+
+          message.innerText =
+            "Cannot connect to the server. Make sure the backend is running.";
+
+          message.classList.add("error");
+
+
+        } finally {
+
+          button.disabled = false;
+
+          button.innerText =
+            "Login";
+        }
+
+      });
+
+
+    // ==================================================
+    // SIGN UP / REGISTRATION
+    // ==================================================
+
+    document
+      .getElementById("signupForm")
+      .addEventListener("submit", async function(e) {
+
+        e.preventDefault();
+
+
+        const name =
+          document
+            .getElementById("signupName")
+            .value
+            .trim();
+
+        const email =
+          document
+            .getElementById("signupEmail")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("signupPassword")
+            .value;
+
+        const message =
+          document.getElementById("signupMessage");
+
+        const button =
+          document.getElementById("signupButton");
+
+
+        message.innerText = "";
+        message.className = "message";
+
+
+        if (password.length < 6) {
+
+          message.innerText =
+            "Password must be at least 6 characters.";
+
+          message.classList.add("error");
+
+          return;
+        }
+
+
+        button.disabled = true;
+
+        button.innerText =
+          "Creating Account...";
+
+
+        try {
+
+          const response = await fetch(
+            "http://localhost:5000/api/auth/register",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json"
+              },
+
+              body: JSON.stringify({
+                full_name: name,
+                email: email,
+                password: password
+              })
+            }
+          );
+
+
+          const data = await response.json();
+
+
+          // Registration failed
+          if (!response.ok) {
+
+            message.innerText =
+              data.message ||
+              "Registration failed.";
+
+            message.classList.add("error");
+
+            return;
+          }
+
+
+          // Registration successful
+          message.innerText =
+            "Account created successfully!";
+
+          message.classList.add("success");
+
+
+          // Save user information
+          localStorage.setItem(
+            "userName",
+            data.user.full_name
+          );
+
+          localStorage.setItem(
+            "userEmail",
+            data.user.email
+          );
+
+
+          const currentUser = {
+
+            user_id: data.user.user_id,
+
+            name: data.user.full_name,
+
+            email: data.user.email
+
+          };
+
+
+          localStorage.setItem(
+            "currentUser",
+            JSON.stringify(currentUser)
+          );
+
+
+          document
+            .getElementById("signupForm")
+            .reset();
+
+
+          // Go to homepage
+          setTimeout(() => {
+
+            window.location.href =
+              "index.html";
+
+          }, 1000);
+
+
+        } catch (error) {
+
+          console.error(
+            "REGISTRATION ERROR:",
+            error
+          );
+
+
+          message.innerText =
+            "Cannot connect to the server. Make sure the backend is running.";
+
+          message.classList.add("error");
+
+
+        } finally {
+
+          button.disabled = false;
+
+          button.innerText =
+            "Create Account";
+        }
+
+      });
+
+
+    // ==================================================
+    // FLIP LOGIN / SIGNUP
+    // ==================================================
+
+    function flipCard() {
+
+      const card =
+        document.getElementById("cardBox");
+
+      card.classList.toggle("flipped");
+    }
+
+
+    // ==================================================
+    // INITIALIZE CAPTCHA
+    // ==================================================
+
+    window.onload = generateCaptcha;
+
+  </script>
+
+</body>
+</html>
